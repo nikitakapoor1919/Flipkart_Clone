@@ -62,9 +62,20 @@ class _SplashScreenState extends State<SplashScreen>
             children: [
               Padding(
                 padding: EdgeInsets.only(bottom: 30),
-                child: Text(
-                  Constants.POWERED_BY,
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        Constants.POWERED_BY_GREET,
+                        style: TextStyle(fontSize: 20, color: Colors.white,letterSpacing:3),
+                      ),
+                    ),
+                    Text(
+                      Constants.POWERED_BY,
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                  ]
                 ),
               )
             ],

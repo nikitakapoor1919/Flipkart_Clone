@@ -47,50 +47,47 @@ class DealsWidget extends StatelessWidget {
             left: 0,
             child: Column(
               children: [
-                Column(
-                  crossAxisAlignment:CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(0),
-                      child: Row(
+                Container(
+                  // Add this change
+                  width: deviceSize.width,
+                  padding: EdgeInsets.all(0),
+                  child: Row(
+                    children: [
+                      Column(
                         children: [
-                          Column(
-                            children: [
-                              Text(
-                                'Deals of the Day',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Row(children: [
-                                Icon(Icons.access_time),
-                                Text('19h 18m Remaining')
-                              ])
-                            ],
-
-                            //crossAxisAlignment: CrossAxisAlignment.start,
+                          Text(
+                            'Deals of the Day',
+                            style: TextStyle(fontSize: 20),
                           ),
+                          Row(children: [
+                            Icon(Icons.access_time),
+                            Text('19h 18m Remaining')
+                          ])
                         ],
-                        //mainAxisAlignment: MainAxisAlignment.start,
-                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //crossAxisAlignment: CrossAxisAlignment.,
+
+                        //crossAxisAlignment: CrossAxisAlignment.start,
                       ),
-                    ),
-                    Container(
-                      width: deviceSize.width - 10,
-                      height: deviceSize.height / 1.5,
-                      child: GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
-                        itemBuilder: (BuildContext ctx, int index) {
-                          //return Text('Hi');
-                          return buildSingleDeal(index);
-                        },
-                        itemCount: deals.length,
-                      ),
-                    )
-                  ],
+                    ],
+                    //mainAxisAlignment: MainAxisAlignment.start,
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //crossAxisAlignment: CrossAxisAlignment.,
+                  ),
                 ),
+                Container(
+                  width: deviceSize.width - 10,
+                  height: deviceSize.height / 1.5,
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                    itemBuilder: (BuildContext ctx, int index) {
+                      //return Text('Hi');
+                      return buildSingleDeal(index);
+                    },
+                    itemCount: deals.length,
+                  ),
+                )
               ],
               // Grid
               mainAxisAlignment: MainAxisAlignment.start,

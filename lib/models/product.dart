@@ -3,6 +3,7 @@ class Product {
   double _price;
   String _url;
   String imagePath;
+  String desc;
   String _status;
 
   String get name => _name;
