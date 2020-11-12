@@ -9,6 +9,7 @@ class Constants {
   static final String GOOGLE_ICON =
       "https://cdn.iconscout.com/icon/free/png-256/google-470-675827.png";
   static const List<String> choices =["SignOut"];
+  static String LIST_OF_PRODUCTS = "/listofproducts";
   static final String DEFAULT_PIC=
      "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.pnghttps://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png";
 }

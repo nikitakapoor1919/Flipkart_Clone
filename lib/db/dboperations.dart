@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flipkart_clone/models/cart.dart';
 import 'package:flipkart_clone/models/menu.dart';
 import 'package:flipkart_clone/models/product.dart';
 import 'package:flipkart_clone/models/user.dart';
@@ -23,6 +24,31 @@ class DbOperations {
     return "Record added ${docRef.id}";
   }
 
+  static Future<String> addToCart(Cart cart) async {
+    DocumentReference docRef;
+    CollectionReference collectionReference =
+    FirebaseFirestore.instance.collection('carts');
+    docRef=collectionReference.document();
+    Map<String, dynamic> map = {
+      "name": cart.name,
+      "price": cart.price,
+      "image": cart.imagePath,
+      "qty" :"1",
+    };
+    try {
+      docRef = await collectionReference.add(map);
+    } catch (e) {
+      return "Error in Record Add $e";
+    }
+    Firestore.instance.collection("carts")
+        .document(docRef.id)
+        .updateData({
+      'id':docRef.id
+    });
+    print('Cart when item added ${docRef.id}');
+    return "Record added ${docRef.id}";
+  }
+
   static Query fetchProducts() {
     Query query = FirebaseFirestore.instance.collection('products');
     String filterOrOrder = "ascending";
@@ -42,6 +68,22 @@ class DbOperations {
       deals.add(product);
     });
     return deals;
+  }
+  static Future<List<Cart>> fetchCarts() async {
+    List<Cart> carts = [];
+    QuerySnapshot querySnapshot =
+    await FirebaseFirestore.instance.collection('carts').get();
+    querySnapshot.docs.forEach((doc) {
+      Cart cart = Cart();
+      cart.name = doc['name'];
+      cart.imagePath = doc['image'];
+      cart.price = doc['price'];
+      cart.qty = doc['qty'];
+      cart.id=doc['id'];
+      carts.add(cart);
+    });
+    print('Carts: $carts');
+    return carts;
   }
 
   static Future<List<Product>> fetchCategories() async {
@@ -95,6 +137,7 @@ class DbOperations {
       user.name = doc['name'];
       user.pic = doc['pic'];
       user.address = doc['address'];
+      user.mobile = doc['mobile'];
       users.add(user);
     });
     print(users);
