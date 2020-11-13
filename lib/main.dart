@@ -23,46 +23,73 @@ void main() {
   //    // home: PaymentPage()
   //    // home:ListOfProducts(),
   //       //home:UploadProduct.constructor(),
-  //   home:CartPage()
+  //   //home:CartPage(),
   // )
   // );
 
-  // I18N
-  // runApp(
-  //   EasyLocalization(
-  //       supportedLocales: [Locale('en', 'US'), Locale('hi', 'IN')],
-  //       path: 'assets/translations', // <-- change patch to your
-  //       fallbackLocale: Locale('hi', 'IN'),
-  //       child: MyApp()),
-  // );
+  //I18N
+  runApp(
+    EasyLocalization(
+        supportedLocales: [Locale('en', 'US'), Locale('hi', 'IN')],
+        path: 'assets/translations', // <-- change patch to your
+        fallbackLocale: Locale('hi', 'IN'),
+        child: MyApp()
+    ),
+  );
   // runApp(MaterialApp(
   //     debugShowCheckedModeBanner: false,
   //     title: 'Login',
   //     home: LoginPage(),
   // ));
 
-  runApp(MaterialApp(
-    title: 'FlipKart Clone',
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-        backgroundColor: Colors.white,
-        appBarTheme:
-            AppBarTheme(color: Color(Constants.FLIPKART_BLUE), elevation: 5)),
-    //home: SplashScreen(),
-    routes: <String, WidgetBuilder>{
-      Constants.ROOT_ROUTE: (BuildContext context) => SplashScreen(),
-      Constants.HOME_ROUTE: (ctx) => HomeScreen(),
-      Constants.LIST_OF_PRODUCTS: (ctx) => ListOfProducts()
-    },
-  ));
+  // runApp(MaterialApp(
+  //   title: 'FlipKart Clone',
+  //   debugShowCheckedModeBanner: false,
+  //   theme: ThemeData(
+  //       backgroundColor: Colors.white,
+  //       appBarTheme:
+  //           AppBarTheme(color: Color(Constants.FLIPKART_BLUE), elevation: 5)
+  //   ),
+  //   //home: SplashScreen(),
+  //   routes: <String, WidgetBuilder>{
+  //     Constants.ROOT_ROUTE: (BuildContext context) => SplashScreen(),
+  //     Constants.HOME_ROUTE: (ctx) => HomeScreen(),
+  //     Constants.LIST_OF_PRODUCTS: (ctx) => ListOfProducts()
+  //   },
+  //
+  // )
+  // );
 }
 
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'I18NDemo',
+//       home: I18NDemo(),
+//       localizationsDelegates: context.localizationDelegates,
+//       supportedLocales: context.supportedLocales,
+//       locale: context.locale,
+//     );
+//   }
+// }
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'I18NDemo',
-      home: I18NDemo(),
+      title: 'FlipKart Clone',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          backgroundColor: Colors.white,
+          appBarTheme:
+          AppBarTheme(color: Color(Constants.FLIPKART_BLUE), elevation: 5)
+      ),
+      routes: <String, WidgetBuilder>{
+        Constants.ROOT_ROUTE: (BuildContext context) => SplashScreen(),
+        Constants.HOME_ROUTE: (ctx) => HomeScreen(),
+        Constants.LIST_OF_PRODUCTS: (ctx) => ListOfProducts()
+      },
+      //home: I18NDemo(),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,

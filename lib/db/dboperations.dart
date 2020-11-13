@@ -6,6 +6,16 @@ import 'package:flipkart_clone/models/user.dart';
 
 class DbOperations {
   _DbOperations() {}
+  static setSearchParam(String name) {
+    List<String> caseSearchList = List();
+    String temp = "";
+    caseSearchList.add(temp);
+    for (int i = 0; i < name.length; i++) {
+      temp = temp + name[i];
+      caseSearchList.add(temp.toLowerCase());
+    }
+    return caseSearchList;
+  }
   static Future<String> addProduct(Product product) async {
     DocumentReference docRef;
     CollectionReference collectionReference =
@@ -14,7 +24,8 @@ class DbOperations {
       "name": product.name,
       "desc": product.desc,
       "price": product.price,
-      "image": product.imagePath
+      "image": product.imagePath,
+      "caseSearch":setSearchParam(product.name),
     };
     try {
       docRef = await collectionReference.add(map);
@@ -23,6 +34,22 @@ class DbOperations {
     }
     return "Record added ${docRef.id}";
   }
+  static Future getDocs() async {
+    QuerySnapshot snap = await Firestore.instance.collection("products").getDocuments();
+    snap.documents.forEach((document) {
+      // print(document.documentID);
+      // print(document["name"]);
+      updateProduct(document.documentID, document["name"]);
+    });
+  }
+  static Future<String> updateProduct(String docRef,String name) async {
+    Firestore.instance.collection("products")
+        .document(docRef)
+        .updateData({
+      "caseSearch":setSearchParam(name),
+    });
+  }
+
 
   static Future<String> addToCart(Cart cart) async {
     DocumentReference docRef;
@@ -33,7 +60,8 @@ class DbOperations {
       "name": cart.name,
       "price": cart.price,
       "image": cart.imagePath,
-      "qty" :"1",
+      "qty" :1,
+     // "sum":cart.price*int.parse(cart.qty)
     };
     try {
       docRef = await collectionReference.add(map);
@@ -54,7 +82,6 @@ class DbOperations {
     String filterOrOrder = "ascending";
     return query;
   }
-
 
   static Future<List<Product>> fetchDeals() async {
     List<Product> deals = [];
@@ -138,6 +165,7 @@ class DbOperations {
       user.pic = doc['pic'];
       user.address = doc['address'];
       user.mobile = doc['mobile'];
+      user.uid=doc['uid'];
       users.add(user);
     });
     print(users);

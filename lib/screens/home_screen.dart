@@ -8,13 +8,15 @@ import 'package:flipkart_clone/screens/paymentpage.dart';
 import 'package:flipkart_clone/utils/constants.dart';
 import 'package:flipkart_clone/utils/gps.dart';
 import 'package:flipkart_clone/widgets/menu_widget.dart';
+import 'package:flipkart_clone/widgets/products-widget.dart';
 import 'package:flipkart_clone/widgets/slider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flipkart_clone/widgets/category_widget.dart';
 import 'package:flipkart_clone/widgets/deals_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-
+//import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'addToCart.dart';
+import 'list_of_products.dart';
 
 
 
@@ -25,7 +27,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final myController = TextEditingController();
  // String text1=tr('searchMsg');
+  String searchString='';
   bool flag = false;
   List<Product> deals = [];
   List<Menu> menus = [];
@@ -34,11 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Product> ads = [];
   List<Cart> carts=[];
   List<Product> categories = [];
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String uid = '';
   @override
   void initState() {
     super.initState();
     _loadThings();
   }
+
   _changeLang() {
     if (flag) {
       EasyLocalization.of(context).locale = Locale('en', 'US');
@@ -47,12 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     flag = !flag;
   }
-  Future getCurrentUser() async {
-    FirebaseUser _user = await FirebaseAuth.instance.currentUser;
-    print("User: ${_user.displayName ?? "None"}");
-    return _user;
-  }
+
   _loadThings() async {
+    //await DbOperations.getDocs();
     menus = await DbOperations.fetchMenus();
     carts = await DbOperations.fetchCarts();
     loc = await getLocation();
@@ -68,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
     int counter=int.parse('${carts.length}');
     return AppBar(
       bottom: PreferredSize(
-        preferredSize: Size.fromHeight(deviceSize.height / 10),
+        preferredSize: Size.fromHeight(deviceSize.height / 7),
         child: Container(
           child: Padding(
             padding: EdgeInsets.all(8),
@@ -77,12 +81,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.white,
                 alignment: Alignment.center,
                 child: TextField(
+                  controller:myController,
+                  onChanged: (val) {
+                    searchString=val.toLowerCase();
+                  },
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.search),
-                      hintText: 'Search For Products, Brands and More'
+                      hintText: tr('searchMsg'),
+                      //'Search For Products, Brands and More',
+                      // suffixIcon: IconButton(
+                      //   icon:Icon(Icons.clear),
+                      //   onPressed:()=>{
+                      //     myController.clear()
+                      //   //searchString=null
+                      //   }
+                      // ),
                   ),
                 ),
               ),
+                RaisedButton(
+                  onPressed: () {
+                    _changeLang();
+                  },
+                  child: Text('Change Language'),
+                )
               ],
             ),
           ),
@@ -104,9 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
-                          print('Value: ${getCurrentUser()}');
-                          return getCurrentUser() != null ?
-                          CartPage(carts):LoginPage();
+                          return CartPage(carts);
                         },
                       ),
                     );
@@ -140,7 +160,8 @@ class _HomeScreenState extends State<HomeScreen> {
         )
       ],
       //leading: Icon(Icons.menu),
-      title: Image.asset(
+      title:
+      Image.asset(
         Constants.FLIPKART_LOGO,
         height: deviceSize.height / 3,
         width: deviceSize.width / 4,
@@ -162,7 +183,8 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           SliderWidget(ads),
           CategoryWidget(categories),
-          DealsWidget(deals)
+          DealsWidget(deals,flag),
+         // ProductsWidget(searchString)
         ],
       ),
     );
