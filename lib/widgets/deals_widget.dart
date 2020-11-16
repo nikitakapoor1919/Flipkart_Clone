@@ -91,7 +91,7 @@ class _DealsWidgetState extends State<DealsWidget> {
                               ),
                               Row(children: [
                                 Icon(Icons.access_time),
-                                Text('19h 18m Remaining')
+                                Text('19h 18m ${tr('remaining')}')
                               ])
                             ],
 
@@ -140,7 +140,10 @@ class _DealsWidgetState extends State<DealsWidget> {
                     ),
                   );
                 },
-                child: Text('View All'),
+                child: Text(
+                  tr('btnView')
+                  //  'View All'
+                ),
               ),
             )
           ],
