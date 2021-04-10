@@ -11,6 +11,7 @@ import 'package:flipkart_clone/screens/splashscreen.dart';
 import 'package:flipkart_clone/screens/upload_product.dart';
 import 'package:flipkart_clone/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flipkart_clone/screens/micdemo.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,7 +67,7 @@ void main() {
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
 //       title: 'I18NDemo',
-//       home: I18NDemo(),
+//        home: MicDemo(),
 //       localizationsDelegates: context.localizationDelegates,
 //       supportedLocales: context.supportedLocales,
 //       locale: context.locale,

@@ -172,6 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Size deviceSize;
   @override
   Widget build(BuildContext context) {
+    print('$searchString');
     deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       drawer: Drawer(
